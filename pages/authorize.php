@@ -1,5 +1,7 @@
 <?php
-session_start(); // ¡IMPORTANTE!
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 require_once 'imports/openid.php';
 require_once 'imports/db.php'; // Incluye tu conexión PDO a Railway
