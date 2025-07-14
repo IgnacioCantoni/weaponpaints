@@ -191,46 +191,107 @@ class LightOpenID
         
         return $use_secure_protocol ? 'https://' : 'http://';
     }
-    
-    $params = http_build_query($params, '', '&');
-    $curl = curl_init($url . ($method == 'GET' && $params ? '?' . $params : ''));
-    curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-    curl_setopt($curl, CURLOPT_HEADER, false);
-    curl_setopt($curl, CURLOPT_USERAGENT, $this->user_agent);
-    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
-    if ($method == 'POST') {
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-type: application/x-www-form-urlencoded'));
-    } else {
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept: application/xrds+xml, */*'));
-    }
+    protected function request_curl($url, $update_claimed_id, $method = 'GET', $params = array())
 
-    curl_setopt($curl, CURLOPT_TIMEOUT, $this->curl_time_out);
-    curl_setopt($curl, CURLOPT_CONNECTTIMEOUT , $this->curl_connect_time_out);
-
-    if (!empty($this->proxy)) {
-        curl_setopt($curl, CURLOPT_PROXY, $this->proxy['host']);
-
-        if (!empty($this->proxy['port'])) {
-            curl_setopt($curl, CURLOPT_PROXYPORT, $this->proxy['port']);
+    {
+        $params = http_build_query($params, '', '&');
+        $curl = curl_init($url . ($method == 'GET' && $params ? '?' . $params : ''));
+        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        curl_setopt($curl, CURLOPT_USERAGENT, $this->user_agent);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        
+        if ($method == 'POST') {
+            curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-type: application/x-www-form-urlencoded'));
+        } else {
+            curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept: application/xrds+xml, */*'));
+        }
+        
+        curl_setopt($curl, CURLOPT_TIMEOUT, $this->curl_time_out); // defaults to infinite
+        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT , $this->curl_connect_time_out); // defaults to 300s
+        
+        if (!empty($this->proxy)) {
+            curl_setopt($curl, CURLOPT_PROXY, $this->proxy['host']);
+            
+            if (!empty($this->proxy['port'])) {
+                curl_setopt($curl, CURLOPT_PROXYPORT, $this->proxy['port']);
+            }
+            
+            if (!empty($this->proxy['user'])) {
+                curl_setopt($curl, CURLOPT_PROXYUSERPWD, $this->proxy['user'] . ':' . $this->proxy['pass']);            
+            }
         }
 
-        if (!empty($this->proxy['user'])) {
-            curl_setopt($curl, CURLOPT_PROXYUSERPWD, $this->proxy['user'] . ':' . $this->proxy['pass']);
+        if($this->verify_peer !== null) {
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, $this->verify_peer);
+            if($this->capath) {
+                curl_setopt($curl, CURLOPT_CAPATH, $this->capath);
+            }
+
+            if($this->cainfo) {
+                curl_setopt($curl, CURLOPT_CAINFO, $this->cainfo);
+            }
         }
+
+        if ($method == 'POST') {
+            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
+        } elseif ($method == 'HEAD') {
+            curl_setopt($curl, CURLOPT_HEADER, true);
+            curl_setopt($curl, CURLOPT_NOBODY, true);
+        } else {
+            curl_setopt($curl, CURLOPT_HEADER, true);
+            curl_setopt($curl, CURLOPT_HTTPGET, true);
+        }
+        $response = curl_exec($curl);
+
+        if($method == 'HEAD' && curl_getinfo($curl, CURLINFO_HTTP_CODE) == 405) {
+            curl_setopt($curl, CURLOPT_HTTPGET, true);
+            $response = curl_exec($curl);
+            $response = substr($response, 0, strpos($response, "\r\n\r\n"));
+        }
+
+        if($method == 'HEAD' || $method == 'GET') {
+            $header_response = $response;
+
+            # If it's a GET request, we want to only parse the header part.
+            if($method == 'GET') {
+                $header_response = substr($response, 0, strpos($response, "\r\n\r\n"));
+            }
+
+            $headers = array();
+            foreach(explode("\n", $header_response) as $header) {
+                $pos = strpos($header,':');
+                if ($pos !== false) {
+                    $name = strtolower(trim(substr($header, 0, $pos)));
+                    $headers[$name] = trim(substr($header, $pos+1));
+                }
+            }
+
+            if($update_claimed_id) {
+                # Update the claimed_id value in case of redirections.
+                $effective_url = curl_getinfo($curl, CURLINFO_EFFECTIVE_URL);
+                # Ignore the fragment (some cURL versions don't handle it well).
+                if (strtok($effective_url, '#') != strtok($url, '#')) {
+                    $this->identity = $this->claimed_id = $effective_url;
+                }
+            }
+
+            if($method == 'HEAD') {
+                return $headers;
+            } else {
+                $this->headers = $headers;
+            }
+        }
+
+        if (curl_errno($curl)) {
+            throw new ErrorException(curl_error($curl), curl_errno($curl));
+        }
+
+        return $response;
     }
-
-    $response = curl_exec($curl);
-
-    if ($response === false) {
-        throw new Exception('cURL error: ' . curl_error($curl));
-    }
-
-    curl_close($curl);
-    return $response;
-}
-
 
     protected function parse_header_array($array, $update_claimed_id)
     {
@@ -262,7 +323,7 @@ class LightOpenID
         return $headers;
     }
 
-    protected function request_curl($url, $update_claimed_id, $params = array(), $method = 'GET')
+    protected function request_streams($url, $method='GET', $params=array(), $update_claimed_id)
     {
         if(!$this->hostExists($url)) {
             throw new ErrorException("Could not connect to $url.", 404);
@@ -1018,4 +1079,49 @@ class LightOpenID
     {
         return isset($this->data[$id]) ? $this->data[$id] : null; 
     }
+
+    protected function request_curl($url, $update_claimed_id, $params = array(), $method = 'GET') {
+        if (!is_array($params)) {
+            throw new Exception('Parámetro inválido: se esperaba un array en http_build_query, se recibió ' . gettype($params));
+        }
+
+        $params = http_build_query($params, '', '&');
+        $curl = curl_init($url . ($method == 'GET' && $params ? '?' . $params : ''));
+        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        curl_setopt($curl, CURLOPT_USERAGENT, $this->user_agent);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+        if ($method == 'POST') {
+            curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-type: application/x-www-form-urlencoded'));
+        } else {
+            curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept: application/xrds+xml, */*'));
+        }
+
+        curl_setopt($curl, CURLOPT_TIMEOUT, $this->curl_time_out);
+        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT , $this->curl_connect_time_out);
+
+        if (!empty($this->proxy)) {
+            curl_setopt($curl, CURLOPT_PROXY, $this->proxy['host']);
+
+            if (!empty($this->proxy['port'])) {
+                curl_setopt($curl, CURLOPT_PROXYPORT, $this->proxy['port']);
+            }
+
+            if (!empty($this->proxy['user'])) {
+                curl_setopt($curl, CURLOPT_PROXYUSERPWD, $this->proxy['user'] . ':' . $this->proxy['pass']);
+            }
+        }
+
+        $response = curl_exec($curl);
+
+        if ($response === false) {
+            throw new Exception('cURL error: ' . curl_error($curl));
+        }
+
+        curl_close($curl);
+        return $response;
+    }
+
 }
