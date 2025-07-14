@@ -1,0 +1,85 @@
+{
+    "website_name": "Servidor LielXD CS2",
+    "invert_direction": false,
+    "error": {
+        "code": "¡Hubo un error {{code}}!",
+        "message": "algo salió mal.",
+        "unauthorized": "No tienes permiso para estar aquí.",
+        "notfound": "La página solicitada no se encontró en este servidor.",
+        "serverinternal": "El servidor encontró una condición inesperada que impidió completar la solicitud.",
+        "button": "Volver al sitio web"
+    },
+    "login": {
+        "header": "Servidor Counter Strike 2 - Conectate ahora:",
+        "titles": [
+            {"name": "CS2.LIELXD.COM", "hover": "Conectarse al servidor Retake", "link": "steam://connect/34.165.48.66:27015?appid=730"},
+            {"name": "CS2.LIELXD.COM", "hover": "Conectarse al servidor Surf", "link": "steam://connect/34.165.48.66:27016?appid=730"}
+        ],
+        "footer": "Por favor, inicia sesión con Steam para continuar.",
+        "button": "Iniciar sesión con Steam"
+    },
+    "skins": {
+        "choose_weapon": "Elegí tu {{label}}",
+        "choose_weapon_default": "Skin",
+        "categories": {
+            "knifes": "Cuchillos",
+            "pistols": "Pistolas",
+            "rifles": "Rifles",
+            "smg": "Subfusiles",
+            "machine_guns": "Ametralladoras",
+            "sniper_rifles": "Francotiradores",
+            "shotguns": "Escopetas",
+            "gloves": "Guantes",
+            "agents": {
+                "label": "Agentes",
+                "ct": "Contraterrorista",
+                "t": "Terrorista"
+            },
+            "mvp": "Kits de música"
+        },
+        "selected_weapon": {
+            "weapon_selected_label": "Arma seleccionada",
+            "choose_weapon_button": "Elegir otra arma",
+            "select_skin_label": "Seleccionar skin"
+        },
+        "view_skin": {
+            "title": "Personalizar",
+            "team": "Equipo",
+            "wear": {
+                "label": "Desgaste",
+                "factory_new": "Fábrica Nueva",
+                "minimal_wear": "Desgaste Mínimo",
+                "field_tested": "Probada en Campo",
+                "well_worn": "Bien Usada",
+                "battle_scarred": "Muy Dañada",
+                "custom": "Personalizado"
+            },
+            "seed": "Seed",
+            "nametag": "Etiqueta de nombre",
+            "stattrak": {
+                "label": "Stattrak",
+                "label_kills": "Asesinatos"
+            },
+            "stickers": "Pegatinas",
+            "keychains": "Llaveros",
+            "select": "Seleccionar",
+            "search": "Buscar",
+            "apply": {
+                "terror": "Aplicar a T",
+                "counterterror": "Aplicar a CT"
+            }
+        },
+        "footer": {
+            "signedin": "Conectado como<br>{{name}}.",
+            "sign_out": "Cerrar sesión",
+            "settings": {
+                "language": "Idioma",
+                "theme": {
+                    "label": "Tema",
+                    "custom": "Color personalizado",
+                    "choose": "Elegir color"
+                }
+            }
+        }
+    }
+}
