@@ -191,13 +191,7 @@ class LightOpenID
         
         return $use_secure_protocol ? 'https://' : 'http://';
     }
-
     
-protected function request_curl($url, $update_claimed_id, $params = array(), $method = 'GET') {
-    if (!is_array($params)) {
-        throw new Exception('Parámetro inválido: se esperaba un array en http_build_query, se recibió ' . gettype($params));
-    }
-
     $params = http_build_query($params, '', '&');
     $curl = curl_init($url . ($method == 'GET' && $params ? '?' . $params : ''));
     curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
