@@ -953,6 +953,7 @@ private function getNamespaceAlias(string $namespace, ?string $hint = null): ?st
  * @return string|null The item if found, otherwise NULL.
  */
 private function getItem(string $id): ?string
-{
+    {
     return $this->data[$id] ?? null;
+    }
 }
