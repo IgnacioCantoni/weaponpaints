@@ -268,7 +268,7 @@ protected function request_curl($url, $update_claimed_id, $params = array(), $me
         return $headers;
     }
 
-    protected function request_streams($url, $method='GET', $params=array(), $update_claimed_id)
+    protected function request_curl($url, $update_claimed_id, $params = array(), $method = 'GET')
     {
         if(!$this->hostExists($url)) {
             throw new ErrorException("Could not connect to $url.", 404);
