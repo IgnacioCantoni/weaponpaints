@@ -194,7 +194,7 @@ class LightOpenID
 
     protected function request_curl($url, $update_claimed_id, $method = 'GET', $params = array())
         if (!is_array($params)) {
-    throw new Exception('Parámetro inválido: se esperaba un array en http_build_query, se recibió ' . gettype($params));
+        throw new Exception('Parámetro inválido: se esperaba un array en http_build_query, se recibió ' . gettype($params));
         }
 
     {
