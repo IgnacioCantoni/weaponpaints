@@ -31,9 +31,9 @@ $Website_Settings = [
 $SteamAPI_KEY = "DAB3A983EF5A35239C8A1C8AB9FE8011";
 
 $DatabaseInfo = [
-    "host" => "127.0.0.1",
-    "database" => "weaponpaints",
-    "username" => "NachZera",
-    "password" => "#Naunoplayyt2882",
-    "port" => "3306"
+    "host" => "shuttle.proxy.rlwy.net",
+    "database" => "railway",
+    "username" => "root",
+    "password" => "vPRKYwpxLAHlzmXXZzZMfyzLDTqFbnUM",
+    "port" => "23851"
 ];
