@@ -192,8 +192,7 @@ class LightOpenID
         return $use_secure_protocol ? 'https://' : 'http://';
     }
 
-    protected function request_curl($url, $update_claimed_id, $method = 'GET', $params = array())
-
+    protected function request_curl($url, $method='GET', $params=array(), $update_claimed_id)
     {
         $params = http_build_query($params, '', '&');
         $curl = curl_init($url . ($method == 'GET' && $params ? '?' . $params : ''));
@@ -1079,49 +1078,4 @@ class LightOpenID
     {
         return isset($this->data[$id]) ? $this->data[$id] : null; 
     }
-
-    protected function request_curl($url, $update_claimed_id, $params = array(), $method = 'GET') {
-        if (!is_array($params)) {
-            throw new Exception('Parámetro inválido: se esperaba un array en http_build_query, se recibió ' . gettype($params));
-        }
-
-        $params = http_build_query($params, '', '&');
-        $curl = curl_init($url . ($method == 'GET' && $params ? '?' . $params : ''));
-        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($curl, CURLOPT_HEADER, false);
-        curl_setopt($curl, CURLOPT_USERAGENT, $this->user_agent);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-
-        if ($method == 'POST') {
-            curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-type: application/x-www-form-urlencoded'));
-        } else {
-            curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept: application/xrds+xml, */*'));
-        }
-
-        curl_setopt($curl, CURLOPT_TIMEOUT, $this->curl_time_out);
-        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT , $this->curl_connect_time_out);
-
-        if (!empty($this->proxy)) {
-            curl_setopt($curl, CURLOPT_PROXY, $this->proxy['host']);
-
-            if (!empty($this->proxy['port'])) {
-                curl_setopt($curl, CURLOPT_PROXYPORT, $this->proxy['port']);
-            }
-
-            if (!empty($this->proxy['user'])) {
-                curl_setopt($curl, CURLOPT_PROXYUSERPWD, $this->proxy['user'] . ':' . $this->proxy['pass']);
-            }
-        }
-
-        $response = curl_exec($curl);
-
-        if ($response === false) {
-            throw new Exception('cURL error: ' . curl_error($curl));
-        }
-
-        curl_close($curl);
-        return $response;
-    }
-
 }
