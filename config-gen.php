@@ -46,11 +46,11 @@ $Website_Settings = [
 $SteamAPI_KEY = "'.$_POST['steamapi'].'";
 
 $DatabaseInfo = [
-    "host" => "'.$_POST['db_host'].'",
-    "database" => "'.$_POST['db_name'].'",
-    "username" => "'.$_POST['db_username'].'",
-    "password" => "'.$_POST['db_password'].'",
-    "port" => "'.$_POST['db_port'].'"
+    "host" => "'.$_POST['DB_HOST'].'",
+    "database" => "'.$_POST['DB_NAME'].'",
+    "username" => "'.$_POST['DB_USER'].'",
+    "password" => "'.$_POST['DB_PASS'].'",
+    "port" => "'.$_POST['DB_PORT'].'"
 ];
 ');
 
