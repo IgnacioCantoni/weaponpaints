@@ -1,5 +1,5 @@
 {
-    "website_name": "LielXD CS2",
+    "website_name": "NachiitoPlay CS2",
     "invert_direction": false,
     "error": {
         "code": "Bład: {{code}}!",
@@ -12,8 +12,8 @@
     "login": {
         "header": "Counter Strike 2 - Połącz się:",
         "titles": [
-            {"name": "CS2.LIELXD.COM", "hover": "Retake Server", "link": "steam://connect/34.165.48.66:27015?appid=730"},
-            {"name": "CS2.LIELXD.COM", "hover": "Surf Server", "link": "steam://connect/34.165.48.66:27016?appid=730"}
+            {"name": "NachiitoPlay MIX", "hover": "Retake Server", "link": "steam://connect/181.97.17.79:27500?appid=730"},
+            {"name": "NachiitoPlay MIX", "hover": "Surf Server", "link": "steam://connect/181.97.17.79:27500?appid=730"}
         ],
         "footer": "aby ustawić skiny musisz się zalogować.",
         "button": "Zaloguj przez Steam"

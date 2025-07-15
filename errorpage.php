@@ -38,7 +38,7 @@ if(isset($translations)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?= GetPrefix(); ?>css/main.css">
     <link rel="stylesheet" href="<?= GetPrefix(); ?>css/error.css">
-    <title><?= $translations->website_name ?? 'CS2 Skins Website by LielXD'; ?> - <?php if(isset($errors[$documentError_Code])) {echo 'Error '.$documentError_Code;}else {echo 'something happened';} ?>!</title>
+    <title><?= $translations->website_name ?? 'CS2 Skins Website by NachiitoPlay'; ?> - <?php if(isset($errors[$documentError_Code])) {echo 'Error '.$documentError_Code;}else {echo 'something happened';} ?>!</title>
 </head>
 <body <?= $bodyStyle ?? "" ?>>
     
@@ -57,7 +57,7 @@ if(isset($translations)) {
             ?>
         </main>
         <footer>
-            <h3><?= $translations->website_name ?? 'CS2 Skins Website by LielXD'; ?></h3>
+            <h3><?= $translations->website_name ?? 'CS2 Skins Website by NachiitoPlay'; ?></h3>
         </footer>
     </div>
 

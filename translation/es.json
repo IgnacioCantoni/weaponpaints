@@ -1,5 +1,5 @@
 {
-    "website_name": "Servidor LielXD CS2",
+    "website_name": "Servidor NachiitoPlay CS2",
     "invert_direction": false,
     "error": {
         "code": "¡Hubo un error {{code}}!",
@@ -12,8 +12,8 @@
     "login": {
         "header": "Servidor Counter Strike 2 - Conectate ahora:",
         "titles": [
-            {"name": "CS2.LIELXD.COM", "hover": "Conectarse al servidor Retake", "link": "steam://connect/34.165.48.66:27015?appid=730"},
-            {"name": "CS2.LIELXD.COM", "hover": "Conectarse al servidor Surf", "link": "steam://connect/34.165.48.66:27016?appid=730"}
+            {"name": "NachiitoPlay MIX", "hover": "Conectarse al servidor Retake", "link": "steam://connect/181.97.17.79:27500?appid=730"},
+            {"name": "NachiitoPlay MIX", "hover": "Conectarse al servidor Surf", "link": "steam://connect/181.97.17.79:27500?appid=730"}
         ],
         "footer": "Por favor, inicia sesión con Steam para continuar.",
         "button": "Iniciar sesión con Steam"
