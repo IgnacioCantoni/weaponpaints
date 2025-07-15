@@ -12,8 +12,8 @@
     "login": {
         "header": "Counter Strike 2 Server - Połącz teraz:",
         "titles": [
-            {"name": "NachiitoPlay MIX", "hover": "Retake Sunucusuna Bağlan", "link": "steam://connect/181.97.17.79:27500?appid=730"},
-            {"name": "NachiitoPlay MIX", "hover": "Surf Sunucusuna Bağlan", "link": "steam://connect/181.97.17.79:27500?appid=730"}
+            {"name": "NachiitoPlay MIX", "hover": "Mix Sunucusuna Bağlan", "link": "steam://connect/181.97.17.79:27500?appid=730"},
+            {"name": "NachiitoPlay MIX", "hover": "Mix Sunucusuna Bağlan", "link": "steam://connect/181.97.17.79:27500?appid=730"}
         ],
         "footer": "lütfen devam etmek için steam üzerinden giriş yapın.",
         "button": "Steam ile Giriş Yap"

@@ -12,8 +12,8 @@
     "login": {
         "header": "Counter Strike 2 Server - Connect now:",
         "titles": [
-            {"name": "NachiitoPlay MIX", "hover": "Connect to Retake Server", "link": "steam://connect/181.97.17.79:27500?appid=730"},
-            {"name": "NachiitoPlay MIX", "hover": "Connect to Surf Server", "link": "steam://connect/181.97.17.79:27500?appid=730"}
+            {"name": "NachiitoPlay MIX", "hover": "Connect to Mix Server", "link": "steam://connect/181.97.17.79:27500?appid=730"},
+            {"name": "NachiitoPlay MIX", "hover": "Connect to Mix Server", "link": "steam://connect/181.97.17.79:27500?appid=730"}
         ],
         "footer": "please login through steam to continue.",
         "button": "Login with steam"
