@@ -417,7 +417,7 @@ switch($selectedweapon_type) {
             <p><?= str_replace('{{name}}', "<strong>$UserInfo->personaname</strong>", $translations->skins->footer->signedin); ?></p>
         </a>
         <div class="credit">
-            <p>This website created by LielXD</p>
+            <p>This website created by NachiitoPlay</p>
         </div>
         <div class="actions">
             <div class="settings">
