@@ -128,7 +128,7 @@ exit;
         }
     </style>
     <script src="<?= GetPrefix(); ?>js/skins.js" defer></script>
-    <title>LielXD CS2 Server - Generate config</title>
+    <title>NachiitoPlay CS2 Server - Generate config</title>
 </head>
 <body <?= $bodyStyle ?? "" ?>>
 
@@ -140,7 +140,7 @@ exit;
 
 <div class="wrapperbox">
     <div class="title-conf">
-        <h2>LielXD Weaponpaints</h2>
+        <h2>NachiitoPlay Weaponpaints</h2>
         <p>setup website</p>
     </div>
     <form method="post" name="settings">
